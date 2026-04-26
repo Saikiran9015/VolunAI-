@@ -1,98 +1,19 @@
 import { motion } from 'framer-motion'
 import {
-  Bell,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  Heart,
-  LayoutDashboard,
-  LogOut,
-  MapPin,
-  MessageSquare,
   Award,
   BookOpen,
-  Search,
-  Settings,
-  ShieldCheck,
-  Star,
-  Trophy,
-  User,
-  Users,
-  Briefcase,
+  Clock,
+  Download,
   ExternalLink,
-  ChevronRight,
-  Plus,
   PlayCircle,
-  Download
+  ShieldCheck
 } from 'lucide-react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useSession } from '../app/session'
-import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
 import { cn } from '../lib/cn'
-
-const stats = [
-  { label: 'Volunteers Joined', value: '1200+', icon: Users, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  { label: 'Events Completed', value: '500+', icon: Calendar, color: 'text-blue-600', bg: 'bg-blue-50' },
-  { label: 'Lives Supported', value: '25,000+', icon: Heart, color: 'text-rose-600', bg: 'bg-rose-50' },
-]
-
-const opportunities = [
-  {
-    id: 1,
-    title: 'Teach Children Weekend Program',
-    location: 'Pune, Maharashtra',
-    duration: '4 hrs / Weekends',
-    needed: '12 Volunteers Needed',
-    tag: 'Teaching',
-    tagColor: 'bg-emerald-100 text-emerald-700',
-    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=400&auto=format&fit=crop',
-  },
-  {
-    id: 2,
-    title: 'Food Distribution Drive',
-    location: 'Mumbai, Maharashtra',
-    duration: '3 hrs / Weekends',
-    needed: '20 Volunteers Needed',
-    tag: 'Food',
-    tagColor: 'bg-orange-100 text-orange-700',
-    image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=400&auto=format&fit=crop',
-  },
-  {
-    id: 3,
-    title: 'Blood Donation Camp Support',
-    location: 'Nashik, Maharashtra',
-    duration: '5 hrs / One Day',
-    needed: '15 Volunteers Needed',
-    tag: 'Health',
-    tagColor: 'bg-rose-100 text-rose-700',
-    image: 'https://images.unsplash.com/photo-1615461066841-6116ecaabb04?q=80&w=400&auto=format&fit=crop',
-  },
-  {
-    id: 4,
-    title: 'Flood Relief Volunteer',
-    location: 'Kolhapur, Maharashtra',
-    duration: 'Flexible',
-    needed: '30 Volunteers Needed',
-    tag: 'Relief',
-    tagColor: 'bg-blue-100 text-blue-700',
-    image: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?q=80&w=400&auto=format&fit=crop',
-  },
-]
-
-const activities = [
-  { date: '25 MAY', title: 'Teach Children - Session 1', time: '10:00 AM - 01:00 PM', location: 'Pune, Maharashtra', status: 'Upcoming' },
-  { date: '28 MAY', title: 'Food Distribution Drive', time: '04:00 PM - 07:00 PM', location: 'Mumbai, Maharashtra', status: 'Upcoming' },
-  { date: '02 JUN', title: 'Blood Donation Camp Support', time: '09:00 AM - 02:00 PM', location: 'Nashik, Maharashtra', status: 'Upcoming' },
-]
-
-const skills = ['Teaching', 'Communication', 'Event Management', 'Social Media', 'Team Work']
 
 export default function VolunteerDashboardPage() {
   const { session } = useSession()
-  const [activeTab, setActiveTab] = useState('upcoming')
 
   return (
     <div className="flex flex-col gap-8 pb-10">

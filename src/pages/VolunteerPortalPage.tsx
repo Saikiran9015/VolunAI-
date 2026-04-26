@@ -40,7 +40,6 @@ export function VolunteerPortalPage() {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
   const [agreed, setAgreed] = useState(false)
   const [status, setStatus] = useState<string | null>(null)
-  const [isLoggingIn, setIsLoggingIn] = useState(false)
 
   function toggleSkill(skill: string) {
     setSelectedSkills((prev) =>
@@ -54,7 +53,6 @@ export function VolunteerPortalPage() {
       return
     }
 
-    setIsLoggingIn(true)
     setStatus(null)
     try {
       // Try email login if it looks like an email, or just attempt login-email endpoint
@@ -85,8 +83,7 @@ export function VolunteerPortalPage() {
       }
     } catch {
       setStatus('Connection error. Please try again.')
-    } finally {
-      setIsLoggingIn(false)
+      // setIsLoggingIn(false) // Removed
     }
   }
 
