@@ -158,7 +158,7 @@ export function NgoAdminPortalPage() {
                         )}
                         <div className="flex flex-wrap gap-2">
                           <Button variant="secondary">Send OTP</Button>
-                          <Button onClick={completeLogin}>Login Securely</Button>
+                          <Button onClick={completeLogin} disabled={isLoggingIn}>{isLoggingIn ? 'Logging in...' : 'Login Securely'}</Button>
                         </div>
                       </div>
                     ),

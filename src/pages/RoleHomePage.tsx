@@ -46,7 +46,7 @@ export function RoleHomePage() {
             </CardHeader>
             <CardContent>
               <Link to={m.id === 'verification' ? `/app/${safeRole}/kyc` : `/app/${safeRole}/${m.id}`}>
-                <Button variant={m.id === 'verification' ? 'default' : 'secondary'}>
+                <Button variant={m.id === 'verification' ? 'primary' : 'secondary'}>
                   {m.id === 'verification' ? 'Start KYC' : 'Open'}
                 </Button>
               </Link>

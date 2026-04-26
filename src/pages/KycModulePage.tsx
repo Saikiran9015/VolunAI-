@@ -216,7 +216,7 @@ export function KycModulePage() {
                   </div>
 
                   <Button 
-                    variant="outline" 
+                    variant="secondary" 
                     className="mt-6 w-full" 
                     onClick={() => {
                       setResult(null)

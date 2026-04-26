@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+
 import { 
   User as UserIcon, 
   ShieldCheck, 
@@ -65,7 +65,7 @@ export function ProfilePage() {
             <CardContent className="space-y-4">
               <div className="flex items-center gap-3 text-slate-700">
                 <Mail className="size-4 text-slate-400" />
-                <span className="text-sm">{session?.email || 'Not provided'}</span>
+                <span className="text-sm">{(session as any)?.email || 'Not provided'}</span>
               </div>
               <div className="flex items-center gap-3 text-slate-700">
                 <Phone className="size-4 text-slate-400" />

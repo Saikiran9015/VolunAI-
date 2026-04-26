@@ -20,7 +20,8 @@ import {
   MapPin,
   FileText,
   AlertCircle,
-  ExternalLink,
+  Heart,
+  TrendingUp,
   ChevronRight,
   Info,
   Zap
@@ -34,7 +35,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 export function AdminDashboardPage() {
   const [users, setUsers] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'users' | 'analytics' | 'emergency'>('users')
+  const [activeTab, setActiveTab] = useState<'users' | 'analytics' | 'impact' | 'emergency'>('users')
   const [filter, setFilter] = useState<'all' | 'ngo' | 'volunteer' | 'donor'>('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [emergencyMsg, setEmergencyMsg] = useState('')

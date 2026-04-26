@@ -6,23 +6,14 @@ import {
   Droplets,
   ShieldCheck,
   History,
-  LayoutDashboard,
-  Plus,
-  ArrowUpRight,
   TrendingUp,
   Award,
   ChevronRight,
-  Search,
-  Bell,
-  MapPin,
-  Clock,
-  ExternalLink,
-  Info
+  Plus
 } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSession } from '../app/session'
-import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { cn } from '../lib/cn'
@@ -62,7 +53,7 @@ const urgentCauses = [
 
 export function DonorDashboardPage() {
   const { session } = useSession()
-  const [walletBalance, setWalletBalance] = useState(5400)
+  const [walletBalance] = useState(5400)
 
   return (
     <div className="flex flex-col gap-8 pb-10">

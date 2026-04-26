@@ -6,7 +6,10 @@ import {
   Download,
   ExternalLink,
   PlayCircle,
-  ShieldCheck
+  ShieldCheck,
+  Search,
+  LayoutDashboard,
+  MessageSquare
 } from 'lucide-react'
 import { useSession } from '../app/session'
 import { Button } from '../components/ui/Button'
