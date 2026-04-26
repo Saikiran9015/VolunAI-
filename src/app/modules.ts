@@ -17,6 +17,10 @@ export type AppModule =
   | 'settings'
   | 'training'
   | 'certification'
+  | 'wallet'
+  | 'fund-causes'
+  | 'donate-clothes'
+  | 'my-donations'
 
 export type ModuleLink = {
   id: AppModule
@@ -51,8 +55,37 @@ export function modulesForRole(role: UserRole): ModuleLink[] {
   switch (role) {
     case 'donor':
       return [
-        // Only specific common modules for donor now
-        ...common.filter(m => m.id === 'blood' || m.id === 'settings')
+        {
+          id: 'wallet',
+          label: 'Add Money / Wallet',
+          description: 'Add funds securely for instant donations.',
+        },
+        {
+          id: 'fund-causes',
+          label: 'Fund Causes',
+          description: 'Donate to education, medical, disaster relief, food, orphan care.',
+        },
+        {
+          id: 'donate-clothes',
+          label: 'Donate Clothes',
+          description: 'Request pickup or drop-off for clothes, blankets, essentials.',
+        },
+        {
+          id: 'blood',
+          label: 'Blood Donation',
+          description: 'Register as donor, emergency requests, nearby camps.',
+        },
+        {
+          id: 'verification',
+          label: 'KYC Verification',
+          description: 'Verify identity for secure donations & tax receipts.',
+        },
+        {
+          id: 'my-donations',
+          label: 'My Donations',
+          description: 'Donation history, receipts, status tracking.',
+        },
+        ...common.filter(m => m.id === 'settings')
       ]
     case 'volunteer':
       return [

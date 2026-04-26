@@ -10,7 +10,7 @@ const { kycRouter } = require('./routes/kyc')
 const { adminRouter } = require('./routes/admin')
 
 const PORT = 4999
-const MONGODB_URI = process.env.MONGODB_URI
+const DATABASE_URL = process.env.DATABASE_URL
 const AZURE_OPENAI_ENDPOINT = process.env.AZURE_OPENAI_ENDPOINT
 const AZURE_OPENAI_API_KEY = process.env.AZURE_OPENAI_API_KEY
 const AZURE_OPENAI_DEPLOYMENT = process.env.AZURE_OPENAI_DEPLOYMENT || 'gpt-4'
@@ -22,9 +22,9 @@ async function main() {
   app.use(cors({ origin: true, credentials: true }))
   app.use(express.json({ limit: '1mb' }))
 
-  if (MONGODB_URI) {
+  if (DATABASE_URL) {
     try {
-      await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 8000 });
+      await mongoose.connect(DATABASE_URL, { serverSelectionTimeoutMS: 8000 });
       console.log('📦 Status: Cloud Infrastructure Connected');
     } catch (err) {
       console.error('❌ Cloud Connection Failed:', err.message);
@@ -41,7 +41,7 @@ async function main() {
       }
     }
   } else {
-    console.warn('MONGODB_URI missing. Auth/OTP DB features may not work; chat can still run.')
+    console.warn('DATABASE_URL missing. Auth/OTP DB features may not work; chat can still run.')
   }
 
   app.get('/api/health', (_req, res) => {

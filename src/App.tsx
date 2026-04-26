@@ -17,6 +17,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import VolunteerDashboardPage from './pages/VolunteerDashboardPage'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { KycModulePage } from './pages/KycModulePage'
+import { DonorDashboardPage } from './pages/DonorDashboardPage'
 import { Languages } from 'lucide-react'
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
 
         <Route element={<AppShell />}>
           <Route path="/app/volunteer" element={<VolunteerDashboardPage />} />
+          <Route path="/app/donor" element={<DonorDashboardPage />} />
           <Route path="/app/:role" element={<RoleHomePage />} />
           <Route path="/app/:role/kyc" element={<KycModulePage />} />
           <Route path="/app/:role/profile" element={<ProfilePage />} />
