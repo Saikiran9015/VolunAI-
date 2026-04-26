@@ -8,7 +8,9 @@
     "dev:all": "concurrently -n WEB,API -c cyan,magenta \"vite\" \"npm --prefix server run dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm --prefix server start",
+    "postinstall": "npm --prefix server install"
   },
   "dependencies": {
     "clsx": "^2.1.1",
