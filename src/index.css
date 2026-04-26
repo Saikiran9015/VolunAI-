@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* Global color system (Tailwind-friendly via CSS variables) */
+:root {
+  --bg: 255 255 255;
+  --fg: 15 23 42; /* slate-900 */
+
+  --card: 255 255 255;
+  --card-fg: 15 23 42;
+
+  --muted: 241 245 249; /* slate-100 */
+  --muted-fg: 71 85 105; /* slate-600 */
+
+  --border: 226 232 240; /* slate-200 */
+
+  --primary: 79 70 229; /* indigo-600 */
+  --primary-fg: 255 255 255;
+  --accent: 217 70 239; /* fuchsia-500 */
+  --success: 16 185 129; /* emerald-500 */
+  --warning: 245 158 11; /* amber-500 */
+  --danger: 244 63 94; /* rose-500 */
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(var(--primary) / 0.18);
+}
+
+/* Google Translate widget polish */
+#google_translate_element {
+  font-size: 14px;
+}
+
+/* Dark theme for the translate popover */
+.translate-popover {
+  background: rgba(2, 6, 23, 0.92) !important; /* slate-950 */
+  border-color: rgba(148, 163, 184, 0.25) !important; /* slate-400 */
+}
+
+/* hide banner/frame + extra branding UI that breaks layout */
+.goog-te-banner-frame,
+.skiptranslate iframe {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  color: transparent !important;
+}
+
+/* style the language select */
+.goog-te-combo {
+  height: 40px !important;
+  min-width: 180px;
+  border-radius: 14px !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  outline: none !important;
+  background: rgba(2, 6, 23, 0.6) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.goog-te-combo:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important; /* indigo */
+  border-color: rgba(99, 102, 241, 0.5) !important;
+}

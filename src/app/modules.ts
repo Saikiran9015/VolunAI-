@@ -1,0 +1,134 @@
+import type { UserRole } from './roles'
+
+export type AppModule =
+  | 'donate'
+  | 'donation-tracking'
+  | 'item-pickup'
+  | 'volunteer-tasks'
+  | 'rewards'
+  | 'emergency-alerts'
+  | 'nearby-ngos'
+  | 'inventory'
+  | 'impact-reports'
+  | 'verification'
+  | 'requests'
+  | 'blood'
+  | 'fraud'
+  | 'settings'
+  | 'training'
+  | 'certification'
+
+export type ModuleLink = {
+  id: AppModule
+  label: string
+  description: string
+}
+
+const common: ModuleLink[] = [
+  {
+    id: 'emergency-alerts',
+    label: 'Emergency Alerts',
+    description: 'Broadcast urgent needs to nearby volunteers/donors.',
+  },
+  {
+    id: 'nearby-ngos',
+    label: 'Nearby NGO Finder',
+    description: 'Find NGOs, shelters, food centers via map/GPS.',
+  },
+  {
+    id: 'blood',
+    label: 'Blood Donation',
+    description: 'Request blood & notify matching donors nearby.',
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    description: 'Profile, language, notification preferences.',
+  },
+]
+
+export function modulesForRole(role: UserRole): ModuleLink[] {
+  switch (role) {
+    case 'donor':
+      return [
+        // Only specific common modules for donor now
+        ...common.filter(m => m.id === 'blood' || m.id === 'settings')
+      ]
+    case 'volunteer':
+      return [
+        {
+          id: 'volunteer-tasks',
+          label: 'Tasks',
+          description: 'Accept tasks, upload proof, track hours served.',
+        },
+        {
+          id: 'rewards',
+          label: 'Rewards',
+          description: 'Points, badges, certificates, leaderboards.',
+        },
+        {
+          id: 'verification',
+          label: 'Verification',
+          description: 'Upload ID/skills, optional police verification.',
+        },
+        {
+          id: 'certification',
+          label: 'Certifications',
+          description: 'View and download your earned certificates.',
+        },
+        {
+          id: 'training',
+          label: 'Training Notifications',
+          description: 'Access courses and training materials.',
+        },
+        // Only specific common modules for volunteer
+        ...common.filter(m => m.id === 'blood' || m.id === 'settings')
+      ]
+    case 'ngo':
+      return [
+        {
+          id: 'requests',
+          label: 'Requests',
+          description: 'Manage help requests and assign volunteers.',
+        },
+        {
+          id: 'inventory',
+          label: 'Inventory',
+          description: 'Track stock of essentials with low-stock alerts.',
+        },
+        {
+          id: 'impact-reports',
+          label: 'Impact Reports',
+          description: 'Families helped, meals served, volunteer hours.',
+        },
+        {
+          id: 'verification',
+          label: 'NGO Verification',
+          description: 'Upload documents for verification (trust building).',
+        },
+        ...common,
+      ]
+    case 'admin':
+      return [
+        {
+          id: 'verification',
+          label: 'Verifications',
+          description: 'Verify NGOs and volunteers, audit documents.',
+        },
+        {
+          id: 'fraud',
+          label: 'Fraud Detection',
+          description: 'Detect suspicious requests, spam, duplicate activity.',
+        },
+        {
+          id: 'impact-reports',
+          label: 'Platform Analytics',
+          description: 'Live stats, alerts, operational dashboards.',
+        },
+        ...common,
+      ]
+    default:
+      return common
+  }
+}
+
