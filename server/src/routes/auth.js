@@ -10,7 +10,7 @@ const { Otp } = require('../models/Otp')
 
 const authRouter = express.Router()
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me'
+const AUTH_SECRET = process.env.AUTH_SECRET || 'dev-secret-change-me'
 const MESSAGECENTRAL_AUTH_TOKEN = process.env.MESSAGECENTRAL_AUTH_TOKEN
 const MESSAGECENTRAL_COUNTRY_CODE = process.env.MESSAGECENTRAL_COUNTRY_CODE || '91'
 
@@ -19,7 +19,7 @@ const localUsers = [] // Fallback for demo mode
 function createToken(user) {
   return jwt.sign(
     { sub: String(user._id || user.id), role: user.role, fullName: user.fullName },
-    JWT_SECRET,
+    AUTH_SECRET,
     { expiresIn: '7d' },
   )
 }

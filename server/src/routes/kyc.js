@@ -3,14 +3,14 @@ const { User } = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 const kycRouter = express.Router()
-const JWT_SECRET = process.env.JWT_SECRET || 'change-me'
+const AUTH_SECRET = process.env.AUTH_SECRET || 'change-me'
 
 // Middleware to protect routes
 const auth = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) return res.status(401).json({ error: 'Auth required' })
-    const decoded = jwt.verify(token, JWT_SECRET)
+    const decoded = jwt.verify(token, AUTH_SECRET)
     req.user = decoded
     next()
   } catch (err) {

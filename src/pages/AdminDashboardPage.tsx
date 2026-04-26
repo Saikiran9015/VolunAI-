@@ -151,6 +151,7 @@ export function AdminDashboardPage() {
             {[
               { id: 'users', label: 'Registrations', icon: Users, color: 'indigo' },
               { id: 'analytics', label: 'Intelligence', icon: BarChart3, color: 'blue' },
+              { id: 'impact', label: 'Impact Tracking', icon: Heart, color: 'emerald' },
               { id: 'emergency', label: 'Crisis Mode', icon: Siren, color: 'rose' },
             ].map((tab) => (
               <button 
@@ -625,6 +626,85 @@ export function AdminDashboardPage() {
                     </div>
                   </CardContent>
                 </Card>
+              </motion.div>
+            )}
+
+            {activeTab === 'impact' && (
+              <motion.div 
+                key="impact"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-8"
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="size-16 rounded-[2rem] bg-emerald-500 text-white grid place-items-center shadow-lg shadow-emerald-500/30">
+                    <Heart className="size-8" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-black text-slate-900 tracking-tight">Impact Tracking System</h2>
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mt-1">Real-time Global Impact Metrics</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Metric 1 */}
+                  <Card className="border-none shadow-xl rounded-[2.5rem] bg-white overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-5">
+                      <Users className="size-32" />
+                    </div>
+                    <CardHeader className="pb-2">
+                      <div className="size-12 rounded-2xl bg-indigo-50 text-indigo-600 grid place-items-center mb-4">
+                        <Users className="size-6" />
+                      </div>
+                      <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wider">People Helped</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-5xl font-black text-slate-900 tracking-tighter">25,482</div>
+                      <div className="mt-4 flex items-center gap-2 text-sm font-bold text-emerald-600 bg-emerald-50 w-fit px-3 py-1 rounded-full">
+                        <TrendingUp className="size-4" /> +12% this month
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Metric 2 */}
+                  <Card className="border-none shadow-xl rounded-[2.5rem] bg-white overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-5">
+                      <CheckCircle2 className="size-32" />
+                    </div>
+                    <CardHeader className="pb-2">
+                      <div className="size-12 rounded-2xl bg-emerald-50 text-emerald-600 grid place-items-center mb-4">
+                        <CheckCircle2 className="size-6" />
+                      </div>
+                      <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wider">Tasks Completed</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-5xl font-black text-slate-900 tracking-tighter">8,930</div>
+                      <div className="mt-4 flex items-center gap-2 text-sm font-bold text-emerald-600 bg-emerald-50 w-fit px-3 py-1 rounded-full">
+                        <TrendingUp className="size-4" /> +5% this month
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Metric 3 */}
+                  <Card className="border-none shadow-xl rounded-[2.5rem] bg-white overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-5">
+                      <Clock className="size-32" />
+                    </div>
+                    <CardHeader className="pb-2">
+                      <div className="size-12 rounded-2xl bg-amber-50 text-amber-600 grid place-items-center mb-4">
+                        <Clock className="size-6" />
+                      </div>
+                      <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wider">Volunteer Hours</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-5xl font-black text-slate-900 tracking-tighter">142.5K</div>
+                      <div className="mt-4 flex items-center gap-2 text-sm font-bold text-emerald-600 bg-emerald-50 w-fit px-3 py-1 rounded-full">
+                        <TrendingUp className="size-4" /> +8% this month
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </motion.div>
             )}
 
