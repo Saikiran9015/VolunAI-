@@ -15,7 +15,7 @@ import { useSession } from '../app/session'
 import { Button } from '../components/ui/Button'
 import { cn } from '../lib/cn'
 
-export default function VolunteerDashboardPage() {
+export function VolunteerDashboardPage() {
   const { session } = useSession()
 
   return (

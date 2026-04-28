@@ -1,4 +1,5 @@
-import { Building2, HeartHandshake, LogOut, MapPin, Siren, ShieldCheck, CheckCircle2, User as UserIcon } from 'lucide-react'
+import { useEffect } from 'react'
+import { Building2, HeartHandshake, LogOut, MapPin, Siren, ShieldCheck, CheckCircle2, User as UserIcon, Bell, Box, FileText, Droplets } from 'lucide-react'
 import { NavLink, Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { modulesForRole } from '../app/modules'
 import type { UserRole } from '../app/roles'
@@ -14,11 +15,19 @@ function labelForRole(role: UserRole) {
 
 export function AppShell() {
   const { role } = useParams()
-  const safeRole = (role ?? 'donor') as UserRole
-  const links = modulesForRole(safeRole)
   const { session, signOut } = useSession()
   const nav = useNavigate()
   const loc = useLocation()
+
+  // Redirect to correct role-based path if mismatch
+  useEffect(() => {
+    if (session?.role && role && session.role !== role) {
+      nav(`/app/${session.role}`)
+    }
+  }, [session?.role, role, nav])
+
+  const safeRole = (session?.role || role || 'donor') as UserRole
+  const links = modulesForRole(safeRole)
 
   return (
     <div className="min-h-dvh bg-gradient-to-b from-slate-50 to-white">
@@ -62,22 +71,24 @@ export function AppShell() {
                 </span>
               </NavLink>
 
-              <NavLink
-                to={`/app/${safeRole}/kyc`}
-                className={({ isActive }) =>
-                  cn(
-                    'rounded-xl px-3 py-2 text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-indigo-50 text-indigo-800'
-                      : 'text-slate-700 hover:bg-slate-100',
-                  )
-                }
-              >
-                <span className="inline-flex items-center gap-2">
-                  <ShieldCheck className="size-4" />
-                  KYC Verification
-                </span>
-              </NavLink>
+              {safeRole === 'donor' && (
+                <NavLink
+                  to={`/app/${safeRole}/kyc`}
+                  className={({ isActive }) =>
+                    cn(
+                      'rounded-xl px-3 py-2 text-sm font-medium transition-colors',
+                      isActive
+                        ? 'bg-indigo-50 text-indigo-800'
+                        : 'text-slate-700 hover:bg-slate-100',
+                    )
+                  }
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <ShieldCheck className="size-4" />
+                    KYC Verification
+                  </span>
+                </NavLink>
+              )}
 
               <NavLink
                 to={`/app/${safeRole}/profile`}
@@ -126,6 +137,14 @@ export function AppShell() {
                       <MapPin className="size-4" />
                     ) : m.id === 'emergency-alerts' ? (
                       <Siren className="size-4" />
+                    ) : m.id === 'requests' ? (
+                      <Bell className="size-4" />
+                    ) : m.id === 'inventory' ? (
+                      <Box className="size-4" />
+                    ) : m.id === 'impact-reports' ? (
+                      <FileText className="size-4" />
+                    ) : m.id === 'blood' ? (
+                      <Droplets className="size-4" />
                     ) : (
                       <HeartHandshake className="size-4" />
                     )}

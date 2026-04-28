@@ -11,24 +11,12 @@ import {
   ChevronRight,
   Plus
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSession } from '../app/session'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { cn } from '../lib/cn'
-
-const stats = [
-  { label: 'Total Donated', value: '₹12,500', icon: Heart, color: 'text-rose-600', bg: 'bg-rose-50' },
-  { label: 'Causes Helped', value: '8', icon: TrendingUp, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-  { label: 'Impact Score', value: '450', icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
-]
-
-const recentActivity = [
-  { id: 1, title: 'Donation to Food Relief', amount: '₹2,000', date: '2 hours ago', status: 'Completed', type: 'cash' },
-  { id: 2, title: 'Clothes Donation Pickup', amount: '12 Items', date: 'Yesterday', status: 'Scheduled', type: 'item' },
-  { id: 3, title: 'Wallet Top-up', amount: '₹5,000', date: '3 days ago', status: 'Completed', type: 'wallet' },
-]
 
 const urgentCauses = [
   {
@@ -53,12 +41,46 @@ const urgentCauses = [
 
 export function DonorDashboardPage() {
   const { session } = useSession()
-  const [walletBalance] = useState(5400)
+  const [walletBalance, setWalletBalance] = useState(0)
+  const [activity, setActivity] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  const totalDonated = activity
+    .filter(act => act.type === 'cash')
+    .reduce((acc, act) => acc + (Number(act.amount) || 0), 0)
+    
+  const causesHelped = new Set(activity.map(act => act.to)).size
+  const impactScore = totalDonated / 10
+
+  const stats = [
+    { label: 'Total Donated', value: `₹${totalDonated.toLocaleString()}`, icon: Heart, color: 'text-rose-600', bg: 'bg-rose-50' },
+    { label: 'Causes Helped', value: causesHelped.toString(), icon: TrendingUp, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { label: 'Impact Score', value: Math.floor(impactScore).toString(), icon: Award, color: 'text-amber-600', bg: 'bg-amber-50' },
+  ]
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const bRes = await fetch('http://localhost:4999/api/donor/wallet')
+        const bData = await bRes.json()
+        setWalletBalance(bData.balance)
+
+        const hRes = await fetch('http://localhost:4999/api/donor/history')
+        const hData = await hRes.json()
+        setActivity(hData.donations || [])
+      } catch (err) {
+        console.error('Dashboard Fetch Error:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className="flex flex-col gap-8 pb-10">
       {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-indigo-900 p-8 text-white md:p-12">
+      <section className="relative overflow-hidden rounded-[2.5rem] bg-indigo-900 p-8 text-white md:p-12 shadow-2xl">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay" />
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-950 via-indigo-950/80 to-transparent" />
         
@@ -94,18 +116,20 @@ export function DonorDashboardPage() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-full md:w-80 rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 p-6"
+            className="w-full md:w-80 rounded-[3rem] bg-white/10 backdrop-blur-2xl border border-white/20 p-8 shadow-2xl"
           >
             <div className="flex justify-between items-start mb-4">
-              <div className="text-indigo-200 text-sm font-medium">Wallet Balance</div>
-              <div className="size-10 rounded-xl bg-indigo-500/20 grid place-items-center">
+              <div className="text-indigo-200 text-sm font-black uppercase tracking-widest">Wallet Balance</div>
+              <div className="size-10 rounded-2xl bg-indigo-500/20 grid place-items-center">
                 <Wallet className="size-5 text-indigo-400" />
               </div>
             </div>
-            <div className="text-3xl font-bold text-white mb-6">₹{walletBalance.toLocaleString()}</div>
-            <Button className="w-full rounded-xl bg-white text-indigo-900 hover:bg-indigo-50 font-bold">
-              <Plus className="size-4 mr-2" /> Top-up Wallet
-            </Button>
+            <div className="text-4xl font-black text-white mb-8 tracking-tighter">₹{walletBalance.toLocaleString()}</div>
+            <Link to="/app/donor/wallet">
+              <Button className="w-full h-12 rounded-2xl bg-white text-indigo-900 hover:bg-indigo-50 font-black shadow-lg">
+                <Plus className="size-4 mr-2" /> Top-up Wallet
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -214,29 +238,37 @@ export function DonorDashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 space-y-4">
-              {recentActivity.map((act) => (
-                <div key={act.id} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
-                  <div className={cn(
-                    "size-10 rounded-xl grid place-items-center",
-                    act.type === 'cash' ? 'bg-emerald-50 text-emerald-600' :
-                    act.type === 'item' ? 'bg-blue-50 text-blue-600' : 'bg-indigo-50 text-indigo-600'
-                  )}>
-                    {act.type === 'cash' ? <Heart className="size-5" /> : 
-                     act.type === 'item' ? <Shirt className="size-5" /> : <Wallet className="size-5" />}
+              {activity.length > 0 ? (
+                activity.slice(0, 4).map((act) => (
+                  <div key={act.id} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-colors">
+                    <div className={cn(
+                      "size-10 rounded-xl grid place-items-center",
+                      act.type === 'cash' ? 'bg-emerald-50 text-emerald-600' :
+                      act.type === 'clothes' ? 'bg-indigo-50 text-indigo-600' : 'bg-rose-50 text-rose-600'
+                    )}>
+                      {act.type === 'cash' ? <Heart className="size-5" /> : 
+                       act.type === 'clothes' ? <Shirt className="size-5" /> : <Droplets className="size-5" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-slate-900 truncate">{act.to}</div>
+                      <div className="text-[10px] text-slate-500 font-medium">{act.date}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-black text-slate-900">
+                        {typeof act.amount === 'number' ? `₹${act.amount}` : act.amount}
+                      </div>
+                      <div className="text-[9px] font-bold text-emerald-600 uppercase tracking-tight">{act.status}</div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-bold text-slate-900 truncate">{act.title}</div>
-                    <div className="text-[10px] text-slate-500">{act.date}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-black text-slate-900">{act.amount}</div>
-                    <div className="text-[9px] font-bold text-emerald-600 uppercase tracking-tight">{act.status}</div>
-                  </div>
-                </div>
-              ))}
-              <Button variant="ghost" className="w-full text-indigo-600 text-sm mt-4">
-                View All History <ChevronRight className="size-4 ml-1" />
-              </Button>
+                ))
+              ) : (
+                <div className="text-center py-8 text-slate-400 text-sm font-medium">No recent activity</div>
+              )}
+              <Link to="/app/donor/my-donations">
+                <Button variant="ghost" className="w-full text-indigo-600 text-sm mt-4 font-bold">
+                  View All History <ChevronRight className="size-4 ml-1" />
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 

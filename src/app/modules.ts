@@ -91,28 +91,33 @@ export function modulesForRole(role: UserRole): ModuleLink[] {
       return [
         {
           id: 'volunteer-tasks',
-          label: 'Tasks',
+          label: 'Volunteer Tasks',
           description: 'Accept tasks, upload proof, track hours served.',
         },
         {
+          id: 'attendance',
+          label: 'Attendance',
+          description: 'Check-in/out of volunteer sessions and track hours.',
+        },
+        {
           id: 'rewards',
-          label: 'Rewards',
+          label: 'Rewards & Badges',
           description: 'Points, badges, certificates, leaderboards.',
+        },
+        {
+          id: 'certification',
+          label: 'Teaching Certification',
+          description: 'Earn and download your teaching and skill certificates.',
+        },
+        {
+          id: 'training',
+          label: 'Training Modules',
+          description: 'Access courses and training materials.',
         },
         {
           id: 'verification',
           label: 'Verification',
           description: 'Upload ID/skills, optional police verification.',
-        },
-        {
-          id: 'certification',
-          label: 'Certifications',
-          description: 'View and download your earned certificates.',
-        },
-        {
-          id: 'training',
-          label: 'Training Notifications',
-          description: 'Access courses and training materials.',
         },
         // Only specific common modules for volunteer
         ...common.filter(m => m.id === 'blood' || m.id === 'settings')
@@ -121,7 +126,7 @@ export function modulesForRole(role: UserRole): ModuleLink[] {
       return [
         {
           id: 'requests',
-          label: 'Requests',
+          label: 'Help Requests',
           description: 'Manage help requests and assign volunteers.',
         },
         {
@@ -135,11 +140,30 @@ export function modulesForRole(role: UserRole): ModuleLink[] {
           description: 'Families helped, meals served, volunteer hours.',
         },
         {
+          id: 'emergency-alerts',
+          label: 'Emergency Alerts',
+          description: 'Broadcast and manage emergency notifications.',
+        },
+        {
+          id: 'nearby-ngos',
+          label: 'Nearby NGO Finder',
+          description: 'Connect with other NGOs for resource sharing.',
+        },
+        {
+          id: 'blood',
+          label: 'Blood Donation',
+          description: 'Manage blood donation drives and requests.',
+        },
+        {
           id: 'verification',
           label: 'NGO Verification',
           description: 'Upload documents for verification (trust building).',
         },
-        ...common,
+        {
+          id: 'settings',
+          label: 'Settings',
+          description: 'Configure your NGO profile and preferences.',
+        },
       ]
     case 'admin':
       return [

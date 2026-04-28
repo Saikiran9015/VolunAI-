@@ -8,6 +8,7 @@ const axios = require('axios')
 const { authRouter } = require('./routes/auth')
 const { kycRouter } = require('./routes/kyc')
 const { adminRouter } = require('./routes/admin')
+const { donorRouter } = require('./routes/donor')
 
 const PORT = 4999
 const DATABASE_URL = process.env.DATABASE_URL
@@ -51,6 +52,7 @@ async function main() {
   app.use('/api/auth', authRouter)
   app.use('/api/kyc', kycRouter)
   app.use('/api/admin', adminRouter)
+  app.use('/api/donor', donorRouter)
 
   app.post('/api/chat', async (req, res) => {
     const { messages } = req.body || {}
