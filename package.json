@@ -8,9 +8,10 @@
     "dev:all": "concurrently -n WEB,API -c cyan,magenta \"vite\" \"npm --prefix server run dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "start": "npm --prefix server start",
-    "postinstall": "npm --prefix server install"
+    "postinstall": "npm --prefix server install",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -22,6 +23,7 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.33.2",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/cli": "^4.2.4",
     "@tailwindcss/postcss": "^4.2.4",
@@ -40,6 +42,7 @@
     "tailwindcss": "^4.2.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "wrangler": "^4.85.0"
   }
 }
